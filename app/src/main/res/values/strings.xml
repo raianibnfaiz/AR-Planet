@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AR Planet</string>
+    <string name="MAPS_API_KEY">AIzaSyBxeQ3OAnwaRSmDTQ-hoWyeRkIhrzZYXJY</string>
 </resources>

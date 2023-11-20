@@ -4,10 +4,14 @@ import android.location.Location
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.maps.android.BuildConfig
 
 class MainActivity : AppCompatActivity() {
     private var map: GoogleMap? = null
@@ -42,6 +46,22 @@ class MainActivity : AppCompatActivity() {
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION)
         }
         setContentView(R.layout.activity_main)
+        // [START_EXCLUDE silent]
+        // Construct a PlacesClient
+        // Replace R.string.MAPS_API_KEY.toString() with your actual API key as a string
+        Places.initialize(applicationContext, "AIzaSyBxeQ3OAnwaRSmDTQ-hoWyeRkIhrzZYXJY")
+        placesClient = Places.createClient(this)
+
+        // Construct a FusedLocationProviderClient.
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        // Build the map.
+        // [START maps_current_place_map_fragment]
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+        // [END maps_current_place_map_fragment]
+        // [END_EXCLUDE]
     }
     companion object {
         private val TAG = MainActivity::class.java.simpleName
@@ -58,3 +78,8 @@ class MainActivity : AppCompatActivity() {
         private const val M_MAX_ENTRIES = 5
     }
 }
+
+private fun SupportMapFragment?.getMapAsync(mainActivity: MainActivity) {
+
+}
+
